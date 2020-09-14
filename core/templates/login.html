@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login - GrowthPlug Dashboard</title>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <style>
+        html{
+            overflow-x: hidden;
+        }
+        .vertical-align {
+            display: flex;
+            align-items: center;
+        }
+
+        #facebookButton {
+            background: #4267b2;
+            border-radius: 1px;
+            display: inline-block;
+            padding: 1px;
+            text-align: center;
+            width: 240px;
+        }
+
+        #facebookButton:hover {
+            cursor: pointer;
+        }
+
+        #facebookButton span.icon {
+            background: url('https://flixable.com/images/facebook.svg') transparent center center no-repeat;
+            display: block;
+            float: left;
+            height: 18px;
+            padding: 25px;
+            width: 18px;
+        }
+
+        #facebookButton span.text {
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 48px;
+        }
+
+        .login-box {
+            margin: 0 auto;
+            margin: 0 auto;
+            padding: 40px;
+            border-radius: 10px;
+            background: #f3f5f3;
+        }
+    </style>
+    <div class="container-fliud" style="height:100vh;">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 vertical-align hidden-xs hidden-sm" style="background: #e0efe1;height: 100vh;">
+                <div style="margin: 0 auto;">
+                    <lottie-player src="https://assets8.lottiefiles.com/packages/lf20_BzsCRH.json"
+                        background="transparent" speed="0.8" style="width: 26vw; height: auto;margin: 0 auto;" loop
+                        autoplay>
+                    </lottie-player>
+                    <h3 class="text-center" style="color:#55b893">Grow and modernize your practice</h3>
+                </div>
+
+            </div>
+            <div class="col-lg-6 col-md-6 vertical-align" style="height: 100vh;">
+                <div class="login-box">
+                    <img
+                        src="https://cdn.shortpixel.ai/client/to_webp,q_glossy,ret_img/https://www.growthplug.com/wp-content/uploads/2020/03/gp-newlogo-1.png">
+                    <br><br>
+
+                    <a href="{% url 'social:begin' 'facebook' %}">
+                    <div id="facebookButton">
+                        <span class="icon"></span>
+                        <span class="text">Log In With Facebook</span>
+                    </div>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+</body>
+
+</html>
