@@ -28,7 +28,7 @@ DEBUG = True
 
 # The simplest case: just add the domain name(s) and IP addresses of your Django server
 # ALLOWED_HOSTS = [ 'example.com', '203.0.113.5']
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['rocky-waters-73571.herokuapp.com', '127.0.0.1']
 
 
 # Application definition

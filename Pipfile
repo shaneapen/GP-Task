@@ -9,6 +9,8 @@ verify_ssl = true
 django = "*"
 social-auth-app-django = "*"
 psycopg2-binary = "*"
+gunicorn = "*"
+whitenoise = "*"
 
 [requires]
 python_version = "3.7"
