@@ -12,8 +12,7 @@ def login(request):
 
 @login_required
 def home(request):
-  return HttpResponse('Request ID: ', request.user.id)
-  # response = render(request, 'home.html')
+  return HttpResponse('Request ID: ', request.user,'Authenticated: ', request.user.is_authenticated(), 'User Object': request.user)
 
   response = render(request,"build/index.html")
   # currentUser = UserSocialAuth.objects.get(id = request.user.id)
