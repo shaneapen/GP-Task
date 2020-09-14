@@ -187,10 +187,11 @@ class Content extends React.Component{
                 <p>All values will be overwritten</p>
                 {/* <label htmlFor="Name">Facebook Page Name: </label>
                 <input type="text" name="facebookPage_name" id="Name" placeholder={this.defaultModalValues().name} onChange={this.commonChange}></input><br></br> */}
-                <label htmlFor="address">Address: </label>
-                <input type="text" name="facebookPage_address" id="address" placeholder={this.defaultModalValues().address} onChange={this.commonChange}></input><br></br>
-                <label htmlFor="phone">Facebook Page Phone: </label>
+                <label htmlFor="phone">Phone: </label>
                 <input type="text" name="facebookPage_phone" id="phone" placeholder={this.defaultModalValues().phone} onChange={this.commonChange}></input><br></br>
+                <label htmlFor="address">Single Line Address: </label>
+                <input type="text" name="facebookPage_address" id="address" placeholder={this.defaultModalValues().address} onChange={this.commonChange}></input><br></br>
+                
                 </Modal>
               <table className="table">
                 <thead>

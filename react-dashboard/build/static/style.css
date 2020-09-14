@@ -117,6 +117,12 @@ table tr > td {
 }
 
 /* MODAL STYLES */
+input{
+  margin-left: 5px;
+}
+button{
+  margin: 5px 5px;
+}
 .modal {
   position: fixed;
   top: 0;

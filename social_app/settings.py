@@ -28,7 +28,7 @@ DEBUG = True
 
 # The simplest case: just add the domain name(s) and IP addresses of your Django server
 # ALLOWED_HOSTS = [ 'example.com', '203.0.113.5']
-ALLOWED_HOSTS = ['rocky-waters-73571.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['rocky-waters-73571.herokuapp.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -84,15 +84,8 @@ WSGI_APPLICATION = 'social_app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
-import dj_database_url
-DATABASES = {'default': dj_database_url.config()}
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -103,6 +96,8 @@ DATABASES = {'default': dj_database_url.config()}
 #         'PORT': '',
 #     }
 # }
+import dj_database_url
+DATABASES = {'default': dj_database_url.config()}
 
 
 # Password validation
