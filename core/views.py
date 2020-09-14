@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from social_django.models import UserSocialAuth
 from django.http import HttpResponse
+from django.utils.html import escape
 
 
 # Create your views here.
@@ -17,7 +18,8 @@ def home(request):
     #  response.set_cookie('access_token', currentUser.extra_data['access_token'])
     #  response.set_cookie('uid', currentUser.uid)
     #  response = render(request,"build/index.html")
-     response = HttpResponse('AUTHENTICATED Request User: ', request.user)
+    response = HttpResponse(escape(repr(request)))
+
   else:
     response = HttpResponse('Request User: ', request.user)
 
