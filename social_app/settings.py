@@ -88,16 +88,18 @@ WSGI_APPLICATION = 'social_app.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'growthplug_pgsql',
-        'USER': 'growthplug_pgsql',
-        'PASSWORD': 'paviliondv6',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
+import dj_database_url
+DATABASES = {'default': dj_database_url.config()}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'growthplug_pgsql',
+#         'USER': 'growthplug_pgsql',
+#         'PASSWORD': 'paviliondv6',
+#         'HOST': 'localhost',
+#         'PORT': '',
+#     }
+# }
 
 
 # Password validation
