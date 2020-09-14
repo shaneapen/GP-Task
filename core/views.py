@@ -17,7 +17,7 @@ def home(request):
     #  response.set_cookie('access_token', currentUser.extra_data['access_token'])
     #  response.set_cookie('uid', currentUser.uid)
     #  response = render(request,"build/index.html")
-    response = HttpResponse(request.user.first_name)
+    response = HttpResponse(request.user.id)
 
   else:
     response = HttpResponse('Request User: ', request.user)
