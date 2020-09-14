@@ -131,6 +131,10 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+SOCIAL_AUTH_PIPELINE = (
+  'social.pipeline.social_auth.associate_by_email',
+)
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
