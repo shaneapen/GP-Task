@@ -12,10 +12,12 @@ def login(request):
 
 @login_required
 def home(request):
-  return HttpResponse('Request ID: ', request.user,'Authenticated: ', request.user.is_authenticated(), 'User Object': request.user)
+  if(request.user.is_authenticated):
+     currentUser = UserSocialAuth.objects.get(id = request.user.id)
+     response.set_cookie('access_token', currentUser.extra_data['access_token'])
+     response.set_cookie('uid', currentUser.uid)
+     response = render(request,"build/index.html")
+  else:
+    response = HttpResponse('Request User: ', request.user)
 
-  response = render(request,"build/index.html")
-  # currentUser = UserSocialAuth.objects.get(id = request.user.id)
-  # response.set_cookie('access_token', currentUser.extra_data['access_token'])
-  # response.set_cookie('uid', currentUser.uid)
-  # return response
+  return response
