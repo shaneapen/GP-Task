@@ -13,9 +13,9 @@ def login(request):
 @login_required
 def home(request):
   if(request.user.is_authenticated):
-     currentUser = UserSocialAuth.objects.get(id = request.user.id)
-     response.set_cookie('access_token', currentUser.extra_data['access_token'])
-     response.set_cookie('uid', currentUser.uid)
+    #  currentUser = UserSocialAuth.objects.get(id = request.user.id)
+    #  response.set_cookie('access_token', currentUser.extra_data['access_token'])
+    #  response.set_cookie('uid', currentUser.uid)
     #  response = render(request,"build/index.html")
      response = HttpResponse('AUTHENTICATED Request User: ', request.user)
   else:
