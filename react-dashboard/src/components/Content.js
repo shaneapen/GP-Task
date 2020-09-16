@@ -1,15 +1,20 @@
 import React from "react";
 import axios from "axios";
 import Modal from "./Modal";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 class Content extends React.Component{
 
     constructor(){
         super();
         this.state = {
+            facebookPage_id: '',
             facebookPage_name: '',
             facebookPage_address: '',
             facebookPage_phone: '',
+            facebookPage_about: '',
             showModal: false,
             updatingListingIndex: -1,
             listings: [
@@ -55,11 +60,11 @@ class Content extends React.Component{
 
     showModal = () => {
         this.setState({ showModal: true });
-      };
+    };
     
-      hideModal = () => {
+    hideModal = () => {
         this.setState({ showModal: false });
-      };
+    };
 
     commonChange(event) {
         this.setState({
@@ -68,24 +73,32 @@ class Content extends React.Component{
     }
 
     saveChanges(event){
+
+        toast.info("Saving changes...");
+
         const page = this.state.listings[this.state.updatingListingIndex];
 
         axios.post(`https://graph.facebook.com/${page.id}`,null, { params: {
             phone: this.state.facebookPage_phone,
             single_line_address: this.state.facebookPage_address,
+            about: this.state.facebookPage_about,
             access_token: page.access_token
           }}).then(res => {
-            console.log("Sucessful",res)
-            alert("Changes have been saved successfully!")
+            toast.success('Changes saved successfully!');
             this.hideModal();  
         })
-          .catch(err => (alert("Some error occured"),console.log("Some error occured",err)))
+          .catch(err => {
+            toast.error('Some error occured!');
+            console.log(err);
+          })
 
              page.phone = this.state.facebookPage_phone;
              page.address = this.state.facebookPage_address;
+             page.about = this.state.facebookPage_about;
 
              this.state.facebookPage_address = "";
-             this.state.facebookPage_phone = "";   
+             this.state.facebookPage_phone = ""; 
+             this.forceUpdate();  
     }
 
     getCookieValue(a) {
@@ -99,6 +112,8 @@ class Content extends React.Component{
     }
 
     getUserManagedPages(){
+
+        toast('Loading Facebook pages');
 
         var user_access_token = this.getCookieValue('access_token'), uid = this.getCookieValue('uid') ;
         axios.get(`https://graph.facebook.com/${uid}/accounts?access_token=${user_access_token}`)
@@ -117,9 +132,10 @@ class Content extends React.Component{
                         icon: "zmdi-facebook",
                         source: "Facebook",
                         name: page.name,
-                        address: response.data.single_line_address || "-",
-                        phone: response.data.phone || "-",
-                        rating: "-",
+                        about: response.data.about,
+                        address: response.data.single_line_address || "",
+                        phone: response.data.phone || "",
+                        rating: "",
                         listed: response.data.is_published,
                         status: true
                     }
@@ -139,34 +155,26 @@ class Content extends React.Component{
             console.log("Error from getUserManagedPages() \n", err);
         })
 
-       
-       
-        
     }
 
     updatePageMetaData(pageId){
         //show a popup with all the editable field..close the popup when the save changes button is pressed
-        console.log("Update Page called on ",pageId);
+
         for(var i=0;i<this.state.listings.length;++i)
             if(pageId == this.state.listings[i].id){
                 this.setState({'updatingListingIndex': i}, () => {
                     console.log(this.state.updatingListingIndex, 'updatinglistinginexfromstate');
-                    console.log("##",this.state.listings[this.state.updatingListingIndex])
+                    this.setState({
+                        facebookPage_id: (this.state.listings[i].id || ''),
+                        facebookPage_about : (this.state.listings[i].about || ''),
+                        facebookPage_name : (this.state.listings[i].name || ''),
+                        facebookPage_phone : (this.state.listings[i].phone || ''),
+                        facebookPage_address : (this.state.listings[i].addres || '')
+                    })
                   }); 
                 break;
             }
         this.showModal();
-    }
-
-    defaultModalValues(){
-        var b = (this.state.updatingListingIndex) > -1;
-        var i = this.state.updatingListingIndex;
-        var obj = {
-            'name': b ? this.state.listings[i].name : "",
-            'address': b? this.state.listings[i].address : "",
-            'phone':b? this.state.listings[i].phone : ""
-        }
-       return obj;
     }
 
     componentDidMount(){
@@ -183,14 +191,14 @@ class Content extends React.Component{
                 <h3>Listings</h3>
               </div>
               <Modal show={this.state.showModal} handleSave={this.saveChanges} handleClose={this.hideModal}>
-                <h2>Update Page Details</h2>
+                <h2>Update Page Details of {this.state.facebookPage_name}</h2>
                 <p>All values will be overwritten</p>
-                {/* <label htmlFor="Name">Facebook Page Name: </label>
-                <input type="text" name="facebookPage_name" id="Name" placeholder={this.defaultModalValues().name} onChange={this.commonChange}></input><br></br> */}
+                <label htmlFor="About">Description: </label>
+                <textarea rows="2" name="facebookPage_about" id="About" value={this.state.facebookPage_about} onChange={this.commonChange}></textarea><br></br>
                 <label htmlFor="phone">Phone: </label>
-                <input type="text" name="facebookPage_phone" id="phone" placeholder={this.defaultModalValues().phone} onChange={this.commonChange}></input><br></br>
+                <input type="text" name="facebookPage_phone" id="phone" value={this.state.facebookPage_phone} onChange={this.commonChange}></input><br></br>
                 <label htmlFor="address">Single Line Address: </label>
-                <input type="text" name="facebookPage_address" id="address" placeholder={this.defaultModalValues().address} onChange={this.commonChange}></input><br></br>
+                <input type="text" name="facebookPage_address" id="address" value={this.state.facebookPage_address} onChange={this.commonChange}></input><br></br>
                 
                 </Modal>
               <table className="table">
@@ -215,9 +223,9 @@ class Content extends React.Component{
                             <td><i className={"zmdi " + listing.icon}></i></td>
                             <td>{listing.source}</td>
                             {!listing.status && Math.random() >= 0.5 ? <td className="red">{listing.name}</td>: <td>{listing.name}</td>}
-                            {!listing.status && Math.random() >= 0.5 ? <td className="red">{listing.address}</td>: <td>{listing.address}</td>}
-                            {!listing.status && Math.random() >= 0.5 ? <td className="red">{listing.phone}</td>: <td>{listing.phone}</td>}
-                            {!listing.status && Math.random() >= 0.5 ? <td className="red">{listing.rating}</td>: <td>{listing.rating}</td>}   
+                            {!listing.status && Math.random() >= 0.5 ? <td className="red">{listing.address || '-'}</td>: <td>{listing.address || '-'}</td>}
+                            {!listing.status && Math.random() >= 0.5 ? <td className="red">{listing.phone || '-'}</td>: <td>{listing.phone || '-'}</td>}
+                            {!listing.status && Math.random() >= 0.5 ? <td className="red">{listing.rating || '-'}</td>: <td>{listing.rating || '-'}</td>}   
                             <td>{listing.listed ? "Yes" : "No"}</td>
                             <td>{listing.status ? "✔️" : "❌" }</td>
                             <td>{listing.source === "Facebook" ? <button className="listing-update" onClick={e => this.updatePageMetaData(listing.id)}>Update</button> : ""}</td>
@@ -228,7 +236,7 @@ class Content extends React.Component{
                 </tbody>
               </table>
             </div>
-    
+            <ToastContainer position="bottom-right" autoClose={2000} hideProgressBar={true} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
           </div>
         )
     }
