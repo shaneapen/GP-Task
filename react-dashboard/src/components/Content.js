@@ -12,7 +12,6 @@ class Content extends React.Component{
         this.state = {
             facebookPage_id: '',
             facebookPage_name: '',
-            facebookPage_address: '',
             facebookPage_phone: '',
             facebookPage_about: '',
             showModal: false,
@@ -80,7 +79,6 @@ class Content extends React.Component{
 
         axios.post(`https://graph.facebook.com/${page.id}`,null, { params: {
             phone: this.state.facebookPage_phone,
-            single_line_address: this.state.facebookPage_address,
             about: this.state.facebookPage_about,
             access_token: page.access_token
           }}).then(res => {
@@ -93,10 +91,9 @@ class Content extends React.Component{
           })
 
              page.phone = this.state.facebookPage_phone;
-             page.address = this.state.facebookPage_address;
              page.about = this.state.facebookPage_about;
-
-             this.state.facebookPage_address = "";
+            
+             this.state.facebookPage_about = "";
              this.state.facebookPage_phone = ""; 
              this.forceUpdate();  
     }
@@ -169,7 +166,6 @@ class Content extends React.Component{
                         facebookPage_about : (this.state.listings[i].about || ''),
                         facebookPage_name : (this.state.listings[i].name || ''),
                         facebookPage_phone : (this.state.listings[i].phone || ''),
-                        facebookPage_address : (this.state.listings[i].addres || '')
                     })
                   }); 
                 break;
@@ -194,11 +190,9 @@ class Content extends React.Component{
                 <h2>Update Page Details of {this.state.facebookPage_name}</h2>
                 <p>All values will be overwritten</p>
                 <label htmlFor="About">Description: </label>
-                <textarea rows="2" name="facebookPage_about" id="About" value={this.state.facebookPage_about} onChange={this.commonChange}></textarea><br></br>
+                <textarea rows="4" name="facebookPage_about" id="About" value={this.state.facebookPage_about} onChange={this.commonChange}></textarea><br></br>
                 <label htmlFor="phone">Phone: </label>
                 <input type="text" name="facebookPage_phone" id="phone" value={this.state.facebookPage_phone} onChange={this.commonChange}></input><br></br>
-                <label htmlFor="address">Single Line Address: </label>
-                <input type="text" name="facebookPage_address" id="address" value={this.state.facebookPage_address} onChange={this.commonChange}></input><br></br>
                 
                 </Modal>
               <table className="table">
