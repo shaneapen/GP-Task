@@ -13,7 +13,7 @@ def login(request):
 @login_required
 def home(request):
   if(request.user.is_authenticated):
-    currentUser = UserSocialAuth.objects.get(id = (int(request.user.id)-1))
+    currentUser = UserSocialAuth.objects.get(id = (int(request.user.id)-1)) # -1 because of the weird issue in Django where same user shows two different IDs..need to follow up on the exact cause of issue 
     response = render(request,"build/index.html")
     response.set_cookie('access_token', currentUser.extra_data['access_token'])
     response.set_cookie('uid', currentUser.uid)

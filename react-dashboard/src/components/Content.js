@@ -65,6 +65,7 @@ class Content extends React.Component{
         this.setState({ showModal: false });
     };
 
+    // handles onChange event from input and textarea
     commonChange(event) {
         this.setState({
             [event.target.name]: event.target.value
@@ -90,6 +91,8 @@ class Content extends React.Component{
             console.log(err);
           })
 
+            
+          // Needs refactoring: Use setState to update states
              page.phone = this.state.facebookPage_phone;
              page.about = this.state.facebookPage_about;
             

@@ -86,6 +86,10 @@ WSGI_APPLICATION = 'social_app.wsgi.application'
 
 
 
+
+import dj_database_url
+DATABASES = {'default': dj_database_url.config()}
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -96,8 +100,6 @@ WSGI_APPLICATION = 'social_app.wsgi.application'
 #         'PORT': '',
 #     }
 # }
-import dj_database_url
-DATABASES = {'default': dj_database_url.config()}
 
 
 # Password validation
@@ -162,7 +164,7 @@ LOGOUT_REDIRECT_URL = 'login'
 SOCIAL_AUTH_FACEBOOK_KEY = '2665949620330798'        # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = 'de251b9fe220d30867ac3c62666a1df3'  # App Secret
 
-SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_link','user_birthday','pages_manage_metadata','pages_show_list'] # add this
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_link','user_birthday','pages_manage_metadata','pages_show_list']
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {       
   'fields': 'id, name, email, picture.type(large), link, birthday'
 }
